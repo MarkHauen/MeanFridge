@@ -50,7 +50,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/Inventory', {
 app.get('/inventory', (req, res) => {
     Inventory.find()
         .then((inventory) => {
-        res.send(inventory);
+            console.log(inventory);
+            res.send(inventory);
         })
         .catch((error) => {
             console.error(error);
@@ -59,10 +60,8 @@ app.get('/inventory', (req, res) => {
 
 // Get ingredient by id
 app.get('/inventory/:id', (req, res) => {
-    console.log(`Looking for id: ${req.params.id}`)
     Inventory.find({ id: req.params.id })
         .then((inventory) => {
-            console.log(inventory);
             res.send(inventory);
         })
         .catch((error) => {
@@ -121,10 +120,44 @@ app.delete('/inventory/:id', (req, res) => {
 
 // Provide the locally stored recipe.json file to the frontend as a JSON object
 app.get('/recipes', (req, res) => {
-    res.send(require('./recipes.json'));
+    console.log('Sending recipes.json');
+    res.send(require('./Data/recipes.json'));
 });
+
+
+// seed the database with the ingredients from databaseSeed.json if empty
+seed = () => {
+    Inventory.find()
+        .then((inventory) => {
+            if (inventory.length === 0) {
+                const ingredients = require('./Data/databaseSeed.json');
+                ingredients.forEach((ingredient) => {                   
+                    const newIngredient = new Inventory({
+                        id: ingredient.id,
+                        name: ingredient.name,
+                        quantity: ingredient.quantity,
+                        standardQuantity: ingredient.quantity
+                    });
+                    newIngredient.save()
+                        .then(() => {
+                            console.log(`Added ${ingredient.name} to database`);
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });                   
+                });
+            } else {
+                console.log('Database already seeded');
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+};
+
 
 // RUN SERVER with 'node index.js'
 app.listen(port, () => {
-   console.log(`Mean Fridge listening at http://localhost:${port}`);
+    seed();
+    console.log(`React Fridge listening at http://localhost:${port}`);
 });

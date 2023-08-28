@@ -1,0 +1,34 @@
+[
+  {
+    "_id": "64eb44c046b9bf50f942840e",
+    "id": 1,
+    "name": "Egg",
+    "quantity": 0,
+    "standardQuantity": 12,
+    "__v": 0
+  },
+  {
+    "_id": "64eb4f69da2a1d6612ea461d",
+    "id": 2,
+    "name": "Bacon",
+    "quantity": 0,
+    "standardQuantity": 9,
+    "__v": 0
+  },
+  {
+    "_id": "64eb54107a02f78b5fd05fb7",
+    "id": 3,
+    "name": "Bread Slice",
+    "quantity": 0,
+    "standardQuantity": 10,
+    "__v": 0
+  },
+  {
+    "_id": "64eb541e7a02f78b5fd05fb9",
+    "id": 4,
+    "name": "Cheese Slice",
+    "quantity": 0,
+    "standardQuantity": 10,
+    "__v": 0
+  }
+]
